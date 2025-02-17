@@ -1,0 +1,8 @@
+.venv/
+illness_model.pkl
+vectorizer.pkl
+
+.DS_Store
+*/.DS_Store
+
+model/__pycache__/
