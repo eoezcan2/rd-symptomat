@@ -5,3 +5,7 @@ RD = Rettungsdienst
 
 ## Setup
 Run **main.py** to train model and to start the web application
+
+## Usage
+Describe the symptoms the patient, either in keywords or in full sentences and then send the request.
+The app will then give you the result based off trained data
