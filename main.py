@@ -3,6 +3,7 @@ if __name__ == "__main__":
     from model.train_model import train_and_save_model
     from server.app import WebServer
 
+    # TODO: Load data from database
     # Load the data
     data = pd.read_csv('existing_data.csv')
 
