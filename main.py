@@ -1,6 +1,7 @@
 if __name__ == "__main__":
     import pandas as pd
     from model.train_model import train_and_save_model
+    from server.app import WebServer
 
     # Load the data
     data = pd.read_csv('existing_data.csv')
@@ -10,4 +11,4 @@ if __name__ == "__main__":
 
     print("Model trained and saved.")
 
-  
+    WebServer().run()

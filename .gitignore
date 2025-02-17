@@ -6,3 +6,4 @@ vectorizer.pkl
 */.DS_Store
 
 model/__pycache__/
+server/__pycache__/
