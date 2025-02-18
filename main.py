@@ -12,4 +12,4 @@ if __name__ == "__main__":
 
     print("Model trained and saved.")
 
-    WebServer().run()
+    WebServer().run() # Run the flask web server
