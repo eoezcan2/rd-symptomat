@@ -71,9 +71,28 @@
             background-color: #005bb5;
         }
 
+        .reminder {
+            font-size: 1.1rem;
+            color: #333;
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #ffeeba;
+            margin-bottom: 20px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
     </style>
 </head>
 <body>
+  <div class="reminder">
+    <p><strong>Friendly reminder:</strong>
+        Bitte geben Sie Ihre Symptome genau an, damit wir Ihnen die besten Informationen zur Verfügung stellen können.
+        Das Ergebnis ist nicht zu 100% richtig und sollte nicht als medizinische Beratung angesehen werden.
+    </p>
+  </div>
   <h1>RD-Symptomat</h1>
   <form action="/predict" method="post">
     <label for="symptoms">Symptome:</label>
