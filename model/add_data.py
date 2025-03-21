@@ -4,18 +4,19 @@ import sys
 
 def add_new_data(new_data, existing_data_filename='existing_data.csv'):
     """
-    Function to add new data to the existing data and retrain the model.
-    :param new_data: New data to be added (list of tuples with (symptoms, illness)).
+    Function to add new data to the existing dataset and retrain the model.
+    :param new_data: New data to be added (list of dictionaries with keys matching column names).
     :param existing_data_filename: The filename where the existing data is saved.
     """
     # Load existing data (if exists)
     try:
         existing_data = pd.read_csv(existing_data_filename)
     except FileNotFoundError:
-        existing_data = pd.DataFrame(columns=['symptoms', 'illness'])
+        columns = ['Disease'] + [f'Symptom_{i}' for i in range(1, 18)]
+        existing_data = pd.DataFrame(columns=columns)
 
     # Convert new data to a DataFrame and append
-    new_data_df = pd.DataFrame(new_data, columns=['symptoms', 'illness'])
+    new_data_df = pd.DataFrame(new_data)
     updated_data = pd.concat([existing_data, new_data_df], ignore_index=True)
 
     # Save the updated data to the file

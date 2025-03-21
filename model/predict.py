@@ -12,15 +12,16 @@ def load_model(model_filename='illness_model.pkl', vectorizer_filename='vectoriz
     vectorizer = joblib.load(vectorizer_filename)
     return model, vectorizer
 
-def predict_illness(symptom_text, model_filename='illness_model.pkl', vectorizer_filename='vectorizer.pkl'):
+def predict_illness(symptoms, model_filename='illness_model.pkl', vectorizer_filename='vectorizer.pkl'):
     """
     Function to predict the illness based on symptoms.
-    :param symptom_text: The input symptoms as text.
+    :param symptoms: A list of symptoms.
     :param model_filename: The filename of the trained model.
     :param vectorizer_filename: The filename of the vectorizer.
     :return: Predicted illness.
     """
     model, vectorizer = load_model(model_filename, vectorizer_filename)
+    symptom_text = ' '.join(symptoms)
     symptom_vector = vectorizer.transform([symptom_text])
     prediction = model.predict(symptom_vector)
     return prediction[0]
