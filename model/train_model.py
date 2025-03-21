@@ -3,9 +3,13 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 import joblib
+import nltk
 from nltk.corpus import stopwords
 
-german_stopwords = stopwords.words('german')
+try:
+    german_stopwords = stopwords.words('german')
+except LookupError:
+    nltk.download('stopwords')
 
 def train_and_save_model(data, model_filename='illness_model.pkl', vectorizer_filename='vectorizer.pkl'):
     """
