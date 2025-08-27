@@ -82,6 +82,16 @@ class WebServer:
             except Exception as e:
                 return jsonify({'error': str(e), 'symptoms': []}), 500
         
+        @self.app.route('/api/symptoms/categorized', methods=['GET'])
+        def api_symptoms_categorized():
+            """API endpoint to get symptoms organized by category"""
+            try:
+                from model.predict import get_symptoms_by_category
+                symptoms = get_symptoms_by_category()
+                return jsonify({'symptoms': symptoms})
+            except Exception as e:
+                return jsonify({'error': str(e), 'symptoms': {}}), 500
+        
         @self.app.route('/health', methods=['GET'])
         def health_check():
             """Health check endpoint for Docker"""

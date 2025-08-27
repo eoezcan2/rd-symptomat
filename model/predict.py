@@ -16,7 +16,7 @@ def clean_symptoms(symptom_text):
     # Replace underscores with spaces
     symptom_text = symptom_text.replace('_', ' ')
     
-    # Remove extra spaces
+    # Remove extra spaces and normalize
     symptom_text = re.sub(r'\s+', ' ', symptom_text)
     
     return symptom_text
@@ -115,10 +115,70 @@ def get_available_symptoms():
                     if cleaned:
                         all_symptoms.add(cleaned)
         
+        # Sort symptoms alphabetically and return as list
         return sorted(list(all_symptoms))
     except Exception as e:
         print(f"Error getting available symptoms: {e}")
         return []
+
+def get_symptoms_by_category():
+    """
+    Get symptoms organized by category for better UI organization
+    """
+    try:
+        import pandas as pd
+        data = pd.read_csv('existing_data.csv')
+        symptom_columns = [col for col in data.columns if col.startswith('Symptom_')]
+        
+        all_symptoms = set()
+        for col in symptom_columns:
+            symptoms = data[col].dropna().unique()
+            for symptom in symptoms:
+                if symptom and str(symptom).strip():
+                    cleaned = clean_symptoms(symptom)
+                    if cleaned:
+                        all_symptoms.add(cleaned)
+        
+        # Categorize symptoms (you can expand this categorization)
+        categories = {
+            'General': [],
+            'Respiratory': [],
+            'Digestive': [],
+            'Skin': [],
+            'Neurological': [],
+            'Cardiovascular': [],
+            'Eye & Vision': [],
+            'Other': []
+        }
+        
+        # Define category keywords
+        category_keywords = {
+            'Respiratory': ['cough', 'breath', 'sneezing', 'sputum', 'asthma', 'pneumonia', 'tuberculosis'],
+            'Digestive': ['stomach', 'abdominal', 'vomiting', 'diarrhoea', 'nausea', 'ulcer', 'gastro', 'appetite', 'gases'],
+            'Skin': ['itching', 'rash', 'skin', 'patches', 'eruptions', 'dischromic', 'impetigo', 'psoriasis'],
+            'Neurological': ['headache', 'migraine', 'dizziness', 'vertigo', 'paralysis', 'seizure', 'epilepsy'],
+            'Cardiovascular': ['chest', 'heart', 'blood', 'pressure', 'attack', 'hypertension'],
+            'Eye & Vision': ['eye', 'vision', 'blurred', 'yellowing', 'watering']
+        }
+        
+        # Categorize symptoms
+        for symptom in sorted(all_symptoms):
+            categorized = False
+            for category, keywords in category_keywords.items():
+                if any(keyword in symptom for keyword in keywords):
+                    categories[category].append(symptom)
+                    categorized = True
+                    break
+            
+            if not categorized:
+                categories['Other'].append(symptom)
+        
+        # Remove empty categories
+        return {k: v for k, v in categories.items() if v}
+        
+    except Exception as e:
+        print(f"Error categorizing symptoms: {e}")
+        return {'General': get_available_symptoms()}
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
