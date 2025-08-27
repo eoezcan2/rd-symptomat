@@ -2,43 +2,270 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>RD-Symptomat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RD-Symptomat - Result</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
+            justify-content: center;
+            padding: 20px;
         }
 
-        p {
-            font-size: 18px;
-            line-height: 1.6;
-            text-align: center;
-            padding: 15px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 600px;
             width: 100%;
+            text-align: center;
         }
 
-        b {
-            color: #0066cc;
-            font-weight: bold;
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+
+        .result-section {
+            margin-bottom: 30px;
+        }
+
+        .prediction {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 16px;
+            border-left: 5px solid #667eea;
+        }
+
+        .confidence-section {
+            margin: 25px 0;
+        }
+
+        .confidence-label {
+            font-size: 1rem;
+            color: #6c757d;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .confidence-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+
+        .confidence-bar {
+            width: 100%;
+            height: 12px;
+            background: #e9ecef;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            border-radius: 6px;
+            transition: width 0.8s ease;
+        }
+
+        .top-predictions {
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .top-predictions h3 {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .prediction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .prediction-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .prediction-name {
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.95rem;
+        }
+
+        .prediction-probability {
+            color: #28a745;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #f5c6cb;
+            margin: 20px 0;
+            font-weight: 500;
+        }
+
+        .symptoms-processed {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            color: #1976d2;
+        }
+
+        .symptoms-processed strong {
+            color: #1565c0;
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .disclaimer {
+            margin-top: 25px;
+            padding: 15px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            color: #856404;
+            line-height: 1.4;
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            
+            .prediction {
+                font-size: 1.8rem;
+                padding: 15px;
+            }
+            
+            .prediction-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
         }
     </style>
 </head>
 <body>
-    <p>
-        Die Symptome deuten am Ehesten auf:
-        <br>
-        <b>{{ result }}</b>
-    </p>
+    <div class="container">
+        <h1 class="logo">RD-Symptomat</h1>
+        
+        {% if error %}
+            <div class="error">
+                <div class="success-icon">⚠️</div>
+                <strong>Error:</strong> {{ error }}
+            </div>
+        {% else %}
+            <div class="result-section">
+                <div class="success-icon">🔍</div>
+                <div class="prediction">
+                    {{ result }}
+                </div>
+            </div>
+            
+            {% if confidence > 0 %}
+                <div class="confidence-section">
+                    <div class="confidence-label">Prediction Confidence</div>
+                    <div class="confidence-value">{{ "%.1f"|format(confidence) }}%</div>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="width: {{ confidence }}%"></div>
+                    </div>
+                </div>
+            {% endif %}
+            
+            {% if top_predictions %}
+                <div class="top-predictions">
+                    <h3>🔍 Other Possible Conditions</h3>
+                    {% for pred in top_predictions %}
+                        {% if pred.disease != result %}
+                            <div class="prediction-item">
+                                <span class="prediction-name">{{ pred.disease }}</span>
+                                <span class="prediction-probability">{{ "%.1f"|format(pred.probability) }}%</span>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            {% if symptoms_processed %}
+                <div class="symptoms-processed">
+                    <strong>Processed symptoms:</strong> {{ symptoms_processed }}
+                </div>
+            {% endif %}
+        {% endif %}
+        
+        <a href="/" class="back-button">
+            ← Try Another Prediction
+        </a>
+        
+        <div class="disclaimer">
+            <strong>⚠️ Disclaimer:</strong> This is an AI-powered prediction tool for educational purposes only. 
+            The results should not be considered as medical advice. Always consult with a healthcare professional 
+            for proper diagnosis and treatment.
+        </div>
+    </div>
 </body>
 </html>

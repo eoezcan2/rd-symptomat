@@ -1,3 +1,7 @@
+# Git
+.git
+.gitignore
+
 # Python
 __pycache__/
 *.py[cod]
@@ -45,12 +49,17 @@ venv.bak/
 ehthumbs.db
 Thumbs.db
 
-# Model files (optional - remove if you want to track them)
-# *.pkl
-
 # Logs
 *.log
 
 # Temporary files
 *.tmp
 *.temp
+
+# Documentation
+README.md
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
