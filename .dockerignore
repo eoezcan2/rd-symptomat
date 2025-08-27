@@ -58,6 +58,7 @@ Thumbs.db
 
 # Documentation
 README.md
+server/static/README.md
 
 # Docker
 Dockerfile

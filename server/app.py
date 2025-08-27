@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory, Response
 import os
 
 class WebServer:
     def __init__(self):
-        self.app = Flask(__name__)
+        self.app = Flask(__name__, static_folder='static')
         self.setup_routes()
     
     def setup_routes(self):
@@ -86,6 +86,11 @@ class WebServer:
         def health_check():
             """Health check endpoint for Docker"""
             return jsonify({'status': 'healthy', 'service': 'rd-symptomat'})
+        
+        @self.app.route('/favicon.ico')
+        def favicon():
+            """Serve favicon - return empty response since we use data URI"""
+            return Response(status=204)  # No Content
     
     def run(self, host='0.0.0.0', port=5000, debug=False):
         """Run the Flask application"""

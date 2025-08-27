@@ -11,6 +11,7 @@ An AI-powered disease prediction system that uses machine learning to predict di
 - **Multi-language Support**: German interface with English backend
 - **Error Handling**: Robust error handling and validation
 - **Docker Support**: Easy deployment with Docker and Docker Compose
+- **Customizable Favicon**: Easy to replace with your own branding
 
 ## Quick Start with Docker
 
@@ -105,6 +106,25 @@ You can also make predictions from the command line:
 
 ```bash
 python model/predict.py "fever, cough, headache"
+```
+
+## Customization
+
+### Adding Your Own Favicon
+
+The application currently uses a placeholder favicon (🏥 hospital emoji). To add your own:
+
+1. **Create favicon files** (see `server/static/README.md` for detailed instructions)
+2. **Place them in** `server/static/` directory
+3. **Update the HTML templates** to use your favicon files
+
+Quick setup:
+```bash
+# Add your favicon.ico to the static directory
+cp your-favicon.ico server/static/favicon.ico
+
+# Update templates to use file instead of data URI
+# (Edit server/templates/index.html and server/templates/result.html)
 ```
 
 ## API Usage
@@ -216,6 +236,8 @@ rd-symptomat/
 │   └── predict.py          # Prediction functions
 └── server/
     ├── app.py              # Flask web server
+    ├── static/             # Static files (favicon, etc.)
+    │   └── README.md       # Favicon setup instructions
     └── templates/
         ├── index.html      # Main page
         └── result.html     # Results page
